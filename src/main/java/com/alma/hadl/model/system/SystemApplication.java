@@ -10,8 +10,7 @@ import com.alma.hadl.model.system.rpc.InRequest;
 import com.alma.hadl.model.system.rpc.OutRequest;
 import com.alma.hadl.model.system.rpc.RPC;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * @author Thomas Minier
@@ -19,25 +18,22 @@ import java.util.List;
  */
 public class SystemApplication extends Configuration {
 
-    public SendRequest sendRequest;
-    public OutRequest outRequest;
-
-    public SystemApplication(List<Interface> interfaces) {
-        super(interfaces);
+    public SystemApplication(InputClient inputClient, OutputClient outputClient) {
+        super(Arrays.asList(inputClient, outputClient));
         // creates the components of the configuration
-        //SendRequest sendRequest = new SendRequest();
-        sendRequest = new SendRequest();
+        SendRequest sendRequest = new SendRequest();
         ReceiveAnswer receiveAnswer = new ReceiveAnswer();
         Client client = new Client(sendRequest, receiveAnswer);
 
         InRequest inRequest = new InRequest();
-        //OutRequest outRequest = new OutRequest();
-        outRequest = new OutRequest();
+        OutRequest outRequest = new OutRequest();
         RPC rpc = new RPC(inRequest, outRequest);
 
         // ...
 
         // calls to attach & bind
+        bind(inputClient, sendRequest);
+        bind(receiveAnswer, outputClient);
         attach(sendRequest, inRequest);
         attach(outRequest, receiveAnswer); // TODO : remove, only here for debug
         // ...
@@ -46,12 +42,5 @@ public class SystemApplication extends Configuration {
         // add the elements to the config
         addElement(client);
         addElement(rpc);
-    }
-
-    public static void main(String[] args) {
-        SystemApplication system = new SystemApplication(Collections.emptyList());
-        system.outRequest.addObserver(System.out::println);
-        system.sendRequest.send("Toto");
-
     }
 }
