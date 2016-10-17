@@ -5,4 +5,7 @@ package com.alma.hadl.metamodel.interfaces.provided;
  * @date 17/10/16
  */
 public abstract class ProvidedRole<T> extends Provided<T> {
+    public ProvidedRole(String name) {
+        super(name);
+    }
 }

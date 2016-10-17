@@ -5,4 +5,7 @@ package com.alma.hadl.metamodel.interfaces.provided;
  * @date 17/10/16
  */
 public abstract class ProvidedPort<T> extends Provided<T> {
+    public ProvidedPort(String name) {
+        super(name);
+    }
 }

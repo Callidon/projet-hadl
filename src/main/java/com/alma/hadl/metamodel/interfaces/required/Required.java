@@ -7,6 +7,10 @@ import com.alma.hadl.metamodel.interfaces.Interface;
  * @date 17/10/16
  */
 public abstract class Required<T> extends Interface<T> {
+    public Required(String name) {
+        super(name);
+    }
+
     public void receive(T data) {
         notifyObservers(data);
     }

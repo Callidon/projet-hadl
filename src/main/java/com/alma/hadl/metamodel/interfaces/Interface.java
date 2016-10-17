@@ -3,6 +3,7 @@ package com.alma.hadl.metamodel.interfaces;
 import com.alma.hadl.metamodel.IObservable;
 import com.alma.hadl.metamodel.IObserver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,7 +11,17 @@ import java.util.List;
  * @date 17/10/16
  */
 public abstract class Interface<T> implements IObservable<T> {
+    private String name;
     protected List<IObserver<T>> observers;
+
+    public Interface(String name) {
+        this.name = name;
+        observers = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public void addObserver(IObserver<T> obs) {
         observers.add(obs);

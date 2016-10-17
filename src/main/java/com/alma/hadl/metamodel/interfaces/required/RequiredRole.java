@@ -5,4 +5,7 @@ package com.alma.hadl.metamodel.interfaces.required;
  * @date 17/10/16
  */
 public abstract class RequiredRole<T> extends Required<T> {
+    public RequiredRole(String name) {
+        super(name);
+    }
 }

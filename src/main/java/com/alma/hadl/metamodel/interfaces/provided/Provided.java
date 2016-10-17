@@ -7,6 +7,11 @@ import com.alma.hadl.metamodel.interfaces.Interface;
  * @date 17/10/16
  */
 public abstract class Provided<T> extends Interface<T> {
+
+    public Provided(String name) {
+        super(name);
+    }
+
     public void send(T data) {
         notifyObservers(data);
     }

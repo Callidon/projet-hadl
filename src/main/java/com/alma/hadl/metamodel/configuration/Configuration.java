@@ -21,7 +21,12 @@ public abstract class Configuration extends Element {
 
     public Configuration(List<Interface> interfaces) {
         super(interfaces);
-        links = new ArrayList<IObserver>();
+        links = new ArrayList<>();
+        elements = new ArrayList<>();
+    }
+
+    public void addElement(Element element) {
+        elements.add(element);
     }
 
     public <T> void attach(Provided<T> input, final Required<T> output) {
