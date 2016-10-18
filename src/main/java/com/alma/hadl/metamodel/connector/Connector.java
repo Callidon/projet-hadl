@@ -15,11 +15,10 @@ import java.util.List;
  */
 public abstract class Connector extends Element {
     protected List<Glue> glues;
-    protected List<IObserver> observers;
 
     public Connector(List<Interface> interfaces) {
         super(interfaces);
-        glues = new ArrayList<Glue>();
+        glues = new ArrayList<>();
     }
 
     public <I,O> void addGlue(final Glue<I,O> glue, Required<I> input, final Provided<O> output) {

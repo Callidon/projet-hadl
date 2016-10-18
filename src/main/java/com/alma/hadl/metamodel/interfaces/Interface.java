@@ -5,6 +5,7 @@ import com.alma.hadl.metamodel.IObserver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author Thomas Minier
@@ -13,6 +14,7 @@ import java.util.List;
 public abstract class Interface<T> implements IObservable<T> {
     private String name;
     protected List<IObserver<T>> observers;
+    protected final Logger LOGGER = Logger.getLogger(this.getClass().getCanonicalName());
 
     public Interface(String name) {
         this.name = name;

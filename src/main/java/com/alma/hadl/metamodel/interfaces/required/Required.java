@@ -12,6 +12,7 @@ public abstract class Required<T> extends Interface<T> {
     }
 
     public void receive(T data) {
+        LOGGER.info("required interface " + getName() + " - received data : " + data.toString());
         notifyObservers(data);
     }
 }
