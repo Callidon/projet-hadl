@@ -11,15 +11,13 @@ import java.util.Arrays;
  * Created by thomas on 24/10/16.
  */
 public class Server extends Component {
-    public Server(RequiredPort<String> receiveRequest, ProvidedPort<String> sendAnswer) {
-        super(Arrays.asList(receiveRequest, sendAnswer));
+    public Server(RequiredPort<String> receiveRequest, ProvidedPort<String> sendAnswer,
+                  ProvidedPort<String> sendDetails, RequiredPort<String> receiveDetails) {
+        super(Arrays.asList(receiveRequest, sendAnswer, sendDetails, receiveDetails));
 
-        receiveRequest.addObserver(new IObserver<String>() {
-            @Override
-            public void update(String data) {
-                System.out.println("server received data : " + data);
-                sendAnswer.send("received data");
-            }
+        receiveRequest.addObserver(data -> {
+            System.out.println("server received data : " + data);
+            sendAnswer.send("received data");
         });
     }
 }
