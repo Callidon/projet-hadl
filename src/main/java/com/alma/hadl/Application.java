@@ -14,7 +14,7 @@ public class Application {
         ProvidedPort<String> inputClient = new ProvidedPort<>("Input Client");
         RequiredPort<String> outputClient = new RequiredPort<>("Output Client");
         SystemApplication system = new SystemApplication(inputClient, outputClient);
-        outputClient.addObserver(System.out::println);
-        inputClient.send("Toto");
+        outputClient.subscribe(System.out::println);
+        inputClient.send("toto");
     }
 }

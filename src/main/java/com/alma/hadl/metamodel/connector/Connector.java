@@ -23,7 +23,7 @@ public abstract class Connector extends Element {
 
     public <I,O> void addGlue(final Glue<I,O> glue, Required<I> input, final Provided<O> output) {
         glues.add(glue);
-        input.addObserver(new IObserver<I>() {
+        input.subscribe(new IObserver<I>() {
             public void update(I data) {
                 output.send(glue.map(data));
             }

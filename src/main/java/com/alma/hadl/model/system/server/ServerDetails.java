@@ -83,7 +83,7 @@ public class ServerDetails extends Configuration {
         // connectionManager#sendAuthRequest -> clearenceRequest#inAuthRequest
         attach(sendAuthRequest, inAuthRequest);
         // clearenceRequest#outAuthAnswer -> securityManager#receiveAuthRequest
-        attach(outAuthAnswer, receiveAuthRequest);
+        attach(outAuthRequest, receiveAuthRequest);
         // securityManager#sendAuthAnswer -> clearenceRequest#inAuthAnswer
         attach(sendAuthAnswer, inAuthAnswer);
         // clearenceRequest#outAuthAnswer -> connectionManager#receiveAuthAnswer

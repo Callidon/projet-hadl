@@ -8,6 +8,6 @@ import com.alma.hadl.metamodel.connector.Glue;
 public class GlueAnswer implements Glue<String, String> {
     @Override
     public String map(String input) {
-        return "from server " + input;
+        return input;
     }
 }

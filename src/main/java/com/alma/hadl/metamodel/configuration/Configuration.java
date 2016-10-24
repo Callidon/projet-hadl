@@ -30,7 +30,7 @@ public abstract class Configuration extends Element {
     }
 
     public <T> void attach(Provided<T> input, final Required<T> output) {
-        input.addObserver(new IObserver<T>() {
+        input.subscribe(new IObserver<T>() {
             public void update(T data) {
                 output.receive(data);
             }
@@ -38,7 +38,7 @@ public abstract class Configuration extends Element {
     }
 
     public <T> void bind(ProvidedPort<T> left, final ProvidedPort<T> right) {
-        left.addObserver(new IObserver<T>() {
+        left.subscribe(new IObserver<T>() {
             public void update(T data) {
                 right.notifyObservers(data);
             }
@@ -46,7 +46,7 @@ public abstract class Configuration extends Element {
     }
 
     public <T> void bind(RequiredPort<T> left, final RequiredPort<T> right) {
-        left.addObserver(new IObserver<T>() {
+        left.subscribe(new IObserver<T>() {
             public void update(T data) {
                 right.receive(data);
             }

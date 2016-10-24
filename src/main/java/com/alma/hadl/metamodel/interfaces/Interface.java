@@ -25,11 +25,11 @@ public abstract class Interface<T> implements IObservable<T> {
         return name;
     }
 
-    public void addObserver(IObserver<T> obs) {
+    public void subscribe(IObserver<T> obs) {
         observers.add(obs);
     }
 
-    public void removeObserver(IObserver<T> obs) {
+    public void unsubscribe(IObserver<T> obs) {
         observers.remove(obs);
     }
 

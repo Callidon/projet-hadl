@@ -9,6 +9,6 @@ import com.alma.hadl.metamodel.connector.Glue;
 public class GlueRequest implements Glue<String, String> {
     @Override
     public String map(String input) {
-        return input + ", qu'on se le dise !";
+        return input;
     }
 }
