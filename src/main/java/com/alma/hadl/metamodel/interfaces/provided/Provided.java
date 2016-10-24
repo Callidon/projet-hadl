@@ -13,7 +13,7 @@ public abstract class Provided<T> extends Interface<T> {
     }
 
     public void send(T data) {
-        LOGGER.info("provided interface " + getName() + " - send data : " + data.toString());
+        LOGGER.info("provided interface '" + getName() + "' - send data : " + data.toString());
         notifyObservers(data);
     }
 }

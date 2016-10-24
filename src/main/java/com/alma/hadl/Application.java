@@ -1,7 +1,7 @@
 package com.alma.hadl;
 
-import com.alma.hadl.model.system.InputClient;
-import com.alma.hadl.model.system.OutputClient;
+import com.alma.hadl.metamodel.interfaces.provided.ProvidedPort;
+import com.alma.hadl.metamodel.interfaces.required.RequiredPort;
 import com.alma.hadl.model.system.SystemApplication;
 
 /**
@@ -11,8 +11,8 @@ import com.alma.hadl.model.system.SystemApplication;
 public class Application {
 
     public static void main(String[] args) {
-        InputClient inputClient = new InputClient();
-        OutputClient outputClient = new OutputClient();
+        ProvidedPort<String> inputClient = new ProvidedPort<>("Input Client");
+        RequiredPort<String> outputClient = new RequiredPort<>("Output Client");
         SystemApplication system = new SystemApplication(inputClient, outputClient);
         outputClient.addObserver(System.out::println);
         inputClient.send("Toto");
