@@ -16,7 +16,7 @@ public class SecurityManager extends Component {
 
         // Listen for incoming Authorization requests
         receiveAuthRequest.subscribe(data -> {
-            if("id;password".equals(data)) {
+            if("thomas;my-shiny-password".equals(data)) {
                 sendAuthAnswer.send("ok");
             } else {
                 sendAuthAnswer.send("access denied, incorrect security query");

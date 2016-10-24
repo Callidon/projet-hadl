@@ -12,17 +12,18 @@ import com.alma.hadl.model.system.server.security.SecurityRequest;
 import com.alma.hadl.model.system.server.sql.SQLRequest;
 
 import java.util.Arrays;
+import java.util.Properties;
 
 /**
  * Created by thomas on 24/10/16.
  */
 public class ServerDetails extends Configuration {
-    public ServerDetails(ProvidedPort<String> inputDetails, RequiredPort<String> outputDetails) {
+    public ServerDetails(ProvidedPort<Properties> inputDetails, RequiredPort<Properties> outputDetails) {
         super(Arrays.asList(inputDetails, outputDetails));
 
         // Creates component ConnectionManager
-        ProvidedPort<String> inputSocket = new ProvidedPort<>("Input Socket");
-        RequiredPort<String> outputSocket = new RequiredPort<>("Output Socket");
+        ProvidedPort<Properties> inputSocket = new ProvidedPort<>("Input Socket");
+        RequiredPort<Properties> outputSocket = new RequiredPort<>("Output Socket");
         ProvidedPort<String> sendQuery = new ProvidedPort<>("Send Query");
         RequiredPort<String> receiveQueryAnswer = new RequiredPort<>("Receive Query Answer");
         ProvidedPort<String> sendAuthRequest = new ProvidedPort<>("Send Auth Request");

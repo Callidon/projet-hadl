@@ -7,20 +7,20 @@ import com.alma.hadl.metamodel.interfaces.required.RequiredPort;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by thomas on 24/10/16.
  */
 public class Server extends Component {
-    private List<String> messages = new ArrayList<>();
-    public Server(RequiredPort<String> receiveRequest, ProvidedPort<String> sendAnswer,
-                  ProvidedPort<String> sendDetails, RequiredPort<String> receiveDetails) {
+    private List<Properties> messages = new ArrayList<>();
+    public Server(RequiredPort<Properties> receiveRequest, ProvidedPort<Properties> sendAnswer,
+                  ProvidedPort<Properties> sendDetails, RequiredPort<Properties> receiveDetails) {
         super(Arrays.asList(receiveRequest, sendAnswer, sendDetails, receiveDetails));
 
         // Listen for incoming messages from Client
         receiveRequest.subscribe(data -> {
             messages.add(data);
-            //forwardRequest(data, sendDetails);
             sendDetails.send(data);
         });
 
@@ -28,9 +28,5 @@ public class Server extends Component {
         receiveDetails.subscribe(response -> {
             sendAnswer.send(response);
         });
-    }
-
-    private void forwardRequest(String message, ProvidedPort<String> sendDetails) {
-        sendDetails.send(message);
     }
 }

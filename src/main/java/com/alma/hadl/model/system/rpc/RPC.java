@@ -6,16 +6,17 @@ import com.alma.hadl.metamodel.interfaces.provided.ProvidedRole;
 import com.alma.hadl.metamodel.interfaces.required.RequiredRole;
 
 import java.util.Arrays;
+import java.util.Properties;
 
 /**
  * @author Thomas Minier
  * @date 17/10/16
  */
 public class RPC extends Connector {
-    public RPC(RequiredRole<String> inRequest, ProvidedRole<String> outRequest, RequiredRole<String> inAnswer, ProvidedRole<String> outAnswer) {
+    public RPC(RequiredRole<Properties> inRequest, ProvidedRole<Properties> outRequest, RequiredRole<Properties> inAnswer, ProvidedRole<Properties> outAnswer) {
         super(Arrays.asList(inRequest, outRequest, inAnswer, outAnswer));
-        Glue<String, String> gRequest = new GlueRequest();
-        Glue<String, String> gAnswer = new GlueAnswer();
+        Glue<Properties, Properties> gRequest = new GlueRequest();
+        Glue<Properties, Properties> gAnswer = new GlueAnswer();
         addGlue(gRequest, inRequest, outRequest);
         addGlue(gAnswer, inAnswer, outAnswer);
     }
