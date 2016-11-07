@@ -3,9 +3,11 @@ package com.alma.hadl.model.system.server;
 import com.alma.hadl.metamodel.component.Component;
 import com.alma.hadl.metamodel.configuration.Configuration;
 import com.alma.hadl.metamodel.connector.Connector;
-import com.alma.hadl.metamodel.interfaces.provided.ProvidedPort;
+import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortComponent;
+import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortConfiguration;
 import com.alma.hadl.metamodel.interfaces.provided.ProvidedRole;
-import com.alma.hadl.metamodel.interfaces.required.RequiredPort;
+import com.alma.hadl.metamodel.interfaces.required.RequiredPortComponent;
+import com.alma.hadl.metamodel.interfaces.required.RequiredPortConfiguration;
 import com.alma.hadl.metamodel.interfaces.required.RequiredRole;
 import com.alma.hadl.model.system.server.clearence.ClearenceRequest;
 import com.alma.hadl.model.system.server.security.SecurityRequest;
@@ -15,34 +17,40 @@ import java.util.Arrays;
 import java.util.Properties;
 
 /**
- * Created by thomas on 24/10/16.
+ * Configuration ServerDetails qui représente une configuration qui gère les requêtes à une base de données.
+ * Une requête entrante est prise en charge par un gestionnaire de connexion, qui coordonne son exéuction.
+ * Elle passe d'abord par une phase de validation avec un gestionnaire de sécurité, qui vérifie le mot de passe fourni
+ * et si l'état de la base permet que la requête y soit transféré. Elle est esnuite transférée à la base de données elle-meêm pour y être exécutée.
+ * Le résultat et les erreurs éventuels sont remontés via le port requis de la configuration.
+ * @author Théo Couraud
+ * @author Thomas Minier
  */
 public class ServerDetails extends Configuration {
-    public ServerDetails(ProvidedPort<Properties> inputDetails, RequiredPort<Properties> outputDetails) {
+    public ServerDetails(ProvidedPortConfiguration<Properties> inputDetails, RequiredPortConfiguration<Properties> outputDetails) {
         super(Arrays.asList(inputDetails, outputDetails));
 
         // Creates component ConnectionManager
-        ProvidedPort<Properties> inputSocket = new ProvidedPort<>("Input Socket");
-        RequiredPort<Properties> outputSocket = new RequiredPort<>("Output Socket");
-        ProvidedPort<String> sendQuery = new ProvidedPort<>("Send Query");
-        RequiredPort<String> receiveQueryAnswer = new RequiredPort<>("Receive Query Answer");
-        ProvidedPort<String> sendAuthRequest = new ProvidedPort<>("Send Auth Request");
-        RequiredPort<String> receiveAuthAnswer = new RequiredPort<>("Receive Auth Answer");
+        ProvidedPortComponent<Properties> inputSocket = new ProvidedPortComponent<>("Input Socket");
+        RequiredPortComponent<Properties> outputSocket = new RequiredPortComponent<>("Output Socket");
+        ProvidedPortComponent<String> sendQuery = new ProvidedPortComponent<>("Send Query");
+        RequiredPortComponent<String> receiveQueryAnswer = new RequiredPortComponent<>("Receive Query Answer");
+        ProvidedPortComponent<String> sendAuthRequest = new ProvidedPortComponent<>("Send Auth Request");
+        RequiredPortComponent<String> receiveAuthAnswer = new RequiredPortComponent<>("Receive Auth Answer");
         Component connectionManager = new ConnectionManager(inputSocket, outputSocket,
                 sendQuery, receiveQueryAnswer, sendAuthRequest, receiveAuthAnswer);
 
         // Creates component Database
-        ProvidedPort<String> sendQueryAnswer = new ProvidedPort<>("Send Query Answer");
-        RequiredPort<String> receiveQuery = new RequiredPort<>("Receive Query");
-        ProvidedPort<String> sendSecurityAnswer = new ProvidedPort<>("Send Security Answer");
-        RequiredPort<String> receiveSecurityRequest = new RequiredPort<>("Receive Security Request");
+        ProvidedPortComponent<String> sendQueryAnswer = new ProvidedPortComponent<>("Send Query Answer");
+        RequiredPortComponent<String> receiveQuery = new RequiredPortComponent<>("Receive Query");
+        ProvidedPortComponent<String> sendSecurityAnswer = new ProvidedPortComponent<>("Send Security Answer");
+        RequiredPortComponent<String> receiveSecurityRequest = new RequiredPortComponent<>("Receive Security Request");
         Component database = new Database(sendQueryAnswer, receiveQuery, sendSecurityAnswer, receiveSecurityRequest);
 
         // Creates component SecurityManager
-        ProvidedPort<String> sendAuthAnswer = new ProvidedPort<>("Send Auth Answer");
-        RequiredPort<byte[]> receiveAuthRequest = new RequiredPort<>("Receive Auth Request");
-        ProvidedPort<String> sendSecurityRequest = new ProvidedPort<>("Send Security Answer");
-        RequiredPort<String> receiveSecurityAnswer = new RequiredPort<>("Receive Security Request");
+        ProvidedPortComponent<String> sendAuthAnswer = new ProvidedPortComponent<>("Send Auth Answer");
+        RequiredPortComponent<byte[]> receiveAuthRequest = new RequiredPortComponent<>("Receive Auth Request");
+        ProvidedPortComponent<String> sendSecurityRequest = new ProvidedPortComponent<>("Send Security Answer");
+        RequiredPortComponent<String> receiveSecurityAnswer = new RequiredPortComponent<>("Receive Security Request");
         Component securityManager = new SecurityManager(sendAuthAnswer, receiveAuthRequest, sendSecurityRequest, receiveSecurityAnswer);
 
         // Creates connector SQLRequest

@@ -1,17 +1,17 @@
 package com.alma.hadl.metamodel.interfaces.provided;
 
 /**
- * ProvidedPort représente le port fourni d'un composant ou d'une configuration.
+ * ProvidedPortComponent représente le port fourni d'un composant
  * @author Théo Couraud
  * @author Thomas Minier
  */
-public class ProvidedPort<T> extends Provided<T> {
+public class ProvidedPortComponent<T> extends Provided<T> {
 
     /**
      * Constructeur
      * @param name Le nom du port fourni
      */
-    public ProvidedPort(String name) {
+    public ProvidedPortComponent(String name) {
         super(name);
     }
 }

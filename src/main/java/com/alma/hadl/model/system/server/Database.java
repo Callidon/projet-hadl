@@ -1,19 +1,22 @@
 package com.alma.hadl.model.system.server;
 
 import com.alma.hadl.metamodel.component.Component;
-import com.alma.hadl.metamodel.interfaces.provided.ProvidedPort;
-import com.alma.hadl.metamodel.interfaces.required.RequiredPort;
+import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortComponent;
+import com.alma.hadl.metamodel.interfaces.required.RequiredPortComponent;
 
 import java.util.*;
 
 /**
- * Created by thomas on 24/10/16.
+ * Composant Database qui représente une base de données SQL.
+ * En l'état, le comportement d'une vraie base est imitée par une HashMap, pour simplifier l'implémentation.
+ * @author Théo Couraud
+ * @author Thomas Minier
  */
 public class Database extends Component {
     private Map<String, String> datas = new HashMap<>();
 
-    public Database(ProvidedPort<String> sendQueryAnswer, RequiredPort<String> receiveQuery,
-                    ProvidedPort<String> sendSecurityAnswer, RequiredPort<String> receiveSecurityRequest) {
+    public Database(ProvidedPortComponent<String> sendQueryAnswer, RequiredPortComponent<String> receiveQuery,
+                    ProvidedPortComponent<String> sendSecurityAnswer, RequiredPortComponent<String> receiveSecurityRequest) {
         super(Arrays.asList(sendQueryAnswer, receiveQuery, sendSecurityAnswer, receiveSecurityRequest));
 
         // Mock the content of a database

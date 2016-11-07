@@ -1,32 +1,27 @@
 package com.alma.hadl.model.system;
 
 import com.alma.hadl.metamodel.component.Component;
-import com.alma.hadl.metamodel.interfaces.provided.ProvidedPort;
-import com.alma.hadl.metamodel.interfaces.required.RequiredPort;
+import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortComponent;
+import com.alma.hadl.metamodel.interfaces.required.RequiredPortComponent;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 
 /**
- * Created by thomas on 24/10/16.
+ * Composant Server qui représente un serveur qui transfère la gestion des messages entrants
+ * à une configuration ServerDetails, chargée de gérer ce comportement
+ * @author Théo Couraud
+ * @author Thomas Minier
  */
 public class Server extends Component {
-    private List<Properties> messages = new ArrayList<>();
-    public Server(RequiredPort<Properties> receiveRequest, ProvidedPort<Properties> sendAnswer,
-                  ProvidedPort<Properties> sendDetails, RequiredPort<Properties> receiveDetails) {
+    public Server(RequiredPortComponent<Properties> receiveRequest, ProvidedPortComponent<Properties> sendAnswer,
+                  ProvidedPortComponent<Properties> sendDetails, RequiredPortComponent<Properties> receiveDetails) {
         super(Arrays.asList(receiveRequest, sendAnswer, sendDetails, receiveDetails));
 
         // Listen for incoming messages from Client
-        receiveRequest.subscribe(data -> {
-            messages.add(data);
-            sendDetails.send(data);
-        });
+        receiveRequest.subscribe(sendDetails::send);
 
         // Listen for incoming messages from ServerDetails
-        receiveDetails.subscribe(response -> {
-            sendAnswer.send(response);
-        });
+        receiveDetails.subscribe(sendAnswer::send);
     }
 }

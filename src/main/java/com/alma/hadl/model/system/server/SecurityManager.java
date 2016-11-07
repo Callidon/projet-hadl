@@ -1,8 +1,8 @@
 package com.alma.hadl.model.system.server;
 
 import com.alma.hadl.metamodel.component.Component;
-import com.alma.hadl.metamodel.interfaces.provided.ProvidedPort;
-import com.alma.hadl.metamodel.interfaces.required.RequiredPort;
+import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortComponent;
+import com.alma.hadl.metamodel.interfaces.required.RequiredPortComponent;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -11,18 +11,21 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 
 /**
- * Created by thomas on 24/10/16.
+ * Composant SecurityManager qui représnte une gestionnaire de sécurité.
+ * Il est chargé de valider les mots de passe et d'authorise une requête si l'état de la base de données le permet.
+ * @author Théo Couraud
+ * @author Thomas Minier
  */
 public class SecurityManager extends Component {
-    private final String REF_STRING = "my-great-password";
+    private final String refString = "my-great-password";
     private byte[] refPassword;
     private final String salt;
 
-    public SecurityManager(ProvidedPort<String> sendAuthAnswer, RequiredPort<byte[]> receiveAuthRequest,
-                           ProvidedPort<String> sendSecurityRequest, RequiredPort<String> receiveSecurityAnswer) {
+    public SecurityManager(ProvidedPortComponent<String> sendAuthAnswer, RequiredPortComponent<byte[]> receiveAuthRequest,
+                           ProvidedPortComponent<String> sendSecurityRequest, RequiredPortComponent<String> receiveSecurityAnswer) {
         super(Arrays.asList(sendAuthAnswer, receiveAuthRequest, sendSecurityRequest, receiveSecurityAnswer));
 
-        // generate a salt for more security
+        // generate a random salt for more security
         SecureRandom random = new SecureRandom();
         salt = new BigInteger(130, random).toString();
 
@@ -30,7 +33,7 @@ public class SecurityManager extends Component {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             // add salt then hash reference password
             md.update(salt.getBytes());
-            refPassword = md.digest(REF_STRING.getBytes());
+            refPassword = md.digest(refString.getBytes());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

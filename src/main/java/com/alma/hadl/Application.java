@@ -1,8 +1,9 @@
 package com.alma.hadl;
 
-import com.alma.hadl.metamodel.IObserver;
-import com.alma.hadl.metamodel.interfaces.provided.ProvidedPort;
-import com.alma.hadl.metamodel.interfaces.required.RequiredPort;
+import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortComponent;
+import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortConfiguration;
+import com.alma.hadl.metamodel.interfaces.required.RequiredPortComponent;
+import com.alma.hadl.metamodel.interfaces.required.RequiredPortConfiguration;
 import com.alma.hadl.model.system.SystemApplication;
 
 import java.util.Properties;
@@ -18,8 +19,8 @@ public class Application {
      * Méthode principale
      */
     public static void main(String[] args) {
-        ProvidedPort<Properties> inputClient = new ProvidedPort<>("Input Client");
-        RequiredPort<Properties> outputClient = new RequiredPort<>("Output Client");
+        ProvidedPortConfiguration<Properties> inputClient = new ProvidedPortConfiguration<>("Input Client");
+        RequiredPortConfiguration<Properties> outputClient = new RequiredPortConfiguration<>("Output Client");
         SystemApplication system = new SystemApplication(inputClient, outputClient);
 
         outputClient.subscribe(System.out::println);

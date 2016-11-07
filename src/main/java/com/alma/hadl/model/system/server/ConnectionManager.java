@@ -1,8 +1,8 @@
 package com.alma.hadl.model.system.server;
 
 import com.alma.hadl.metamodel.component.Component;
-import com.alma.hadl.metamodel.interfaces.provided.ProvidedPort;
-import com.alma.hadl.metamodel.interfaces.required.RequiredPort;
+import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortComponent;
+import com.alma.hadl.metamodel.interfaces.required.RequiredPortComponent;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -10,14 +10,17 @@ import java.util.Properties;
 import java.util.Queue;
 
 /**
- * Created by thomas on 24/10/16.
+ * Composant ConnnectionManager qui représengte un gestionnaire de connexion, chargé de gérer les requêtes
+ * selon un protocole de précis. Il utilise d'autres composants de sa configuration à cette fin.
+ * @author Théo Couraud
+ * @author Thomas Minier
  */
 public class ConnectionManager extends Component {
     private Queue<Properties> queries = new LinkedList<>();
 
-    public ConnectionManager(ProvidedPort<Properties> inputSocket, RequiredPort<Properties> outputSocket,
-                             ProvidedPort<String> sendQuery, RequiredPort<String> receiveQueryAnswer,
-                             ProvidedPort<String> sendAuthRequest, RequiredPort<String> receiveAuthAnswer) {
+    public ConnectionManager(ProvidedPortComponent<Properties> inputSocket, RequiredPortComponent<Properties> outputSocket,
+                             ProvidedPortComponent<String> sendQuery, RequiredPortComponent<String> receiveQueryAnswer,
+                             ProvidedPortComponent<String> sendAuthRequest, RequiredPortComponent<String> receiveAuthAnswer) {
         super(Arrays.asList(inputSocket, outputSocket, sendQuery, receiveQueryAnswer, sendAuthRequest, receiveAuthAnswer));
 
         // Listen for incoming messages
