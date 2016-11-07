@@ -13,6 +13,7 @@ import java.util.Queue;
  * Created by thomas on 24/10/16.
  */
 public class ConnectionManager extends Component {
+    private Queue<Properties> queries = new LinkedList<>();
 
     public ConnectionManager(ProvidedPort<Properties> inputSocket, RequiredPort<Properties> outputSocket,
                              ProvidedPort<String> sendQuery, RequiredPort<String> receiveQueryAnswer,
@@ -21,33 +22,28 @@ public class ConnectionManager extends Component {
 
         // Listen for incoming messages
         inputSocket.subscribe(data -> {
-            // forward message to the appropriate component
-            String type = data.getProperty("type");
-            switch (type) {
-                case "auth-request":
-                    sendAuthRequest.send(data.getProperty("username") + ";" + data.getProperty("mdp"));
-                    break;
-                case "sql-query":
-                    sendQuery.send(data.getProperty("query"));
-                    break;
-                default:
-                    Properties response = new Properties();
-                    response.setProperty("type", "error-message");
-                    response.setProperty("value", "unknown message type");
-                    outputSocket.receive(response);
-            }
+            // store query & validate username using Security manager
+            queries.add(data);
+            sendAuthRequest.send(data.getProperty("mdp"));
         });
 
         // Listen for incoming Authorization answers
         receiveAuthAnswer.subscribe(data -> {
-            Properties response = new Properties();
-            response.setProperty("type", "auth-answer");
-            response.setProperty("value", data);
-            outputSocket.receive(response);
+            if("ok".equals(data)) {
+                // get the query & transfer it to the database
+                Properties query = queries.poll();
+                sendQuery.send(query.getProperty("query"));
+            } else {
+                // send a error response to the client
+                Properties response = new Properties();
+                response.setProperty("error-value", data);
+                outputSocket.receive(response);
+            }
         });
 
         // Listen for incoming SQL query answers
         receiveQueryAnswer.subscribe(data -> {
+            // send the result of the query to the client
             Properties response = new Properties();
             response.setProperty("type", "sql-answer");
             response.setProperty("value", data);

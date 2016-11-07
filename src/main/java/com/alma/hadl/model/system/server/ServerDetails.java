@@ -34,16 +34,16 @@ public class ServerDetails extends Configuration {
         // Creates component Database
         ProvidedPort<String> sendQueryAnswer = new ProvidedPort<>("Send Query Answer");
         RequiredPort<String> receiveQuery = new RequiredPort<>("Receive Query");
-        ProvidedPort<String> sendSecurityRequest = new ProvidedPort<>("Send Security Request");
-        RequiredPort<String> receiveSecurityAnswer = new RequiredPort<>("Receive Security Answer");
-        Component database = new Database(sendQueryAnswer, receiveQuery, sendSecurityRequest, receiveSecurityAnswer);
+        ProvidedPort<String> sendSecurityAnswer = new ProvidedPort<>("Send Security Answer");
+        RequiredPort<String> receiveSecurityRequest = new RequiredPort<>("Receive Security Request");
+        Component database = new Database(sendQueryAnswer, receiveQuery, sendSecurityAnswer, receiveSecurityRequest);
 
         // Creates component SecurityManager
         ProvidedPort<String> sendAuthAnswer = new ProvidedPort<>("Send Auth Answer");
-        RequiredPort<String> receiveAuthRequest = new RequiredPort<>("Receive Auth Request");
-        ProvidedPort<String> sendSecurityAnswer = new ProvidedPort<>("Send Security Answer");
-        RequiredPort<String> receiveSecurityRequest = new RequiredPort<>("Receive Security Request");
-        Component securityManager = new SecurityManager(sendAuthAnswer, receiveAuthRequest, sendSecurityAnswer, receiveSecurityRequest);
+        RequiredPort<byte[]> receiveAuthRequest = new RequiredPort<>("Receive Auth Request");
+        ProvidedPort<String> sendSecurityRequest = new ProvidedPort<>("Send Security Answer");
+        RequiredPort<String> receiveSecurityAnswer = new RequiredPort<>("Receive Security Request");
+        Component securityManager = new SecurityManager(sendAuthAnswer, receiveAuthRequest, sendSecurityRequest, receiveSecurityAnswer);
 
         // Creates connector SQLRequest
         RequiredRole<String> inQuery = new RequiredRole<>("In Query");
@@ -54,7 +54,7 @@ public class ServerDetails extends Configuration {
 
         // Creates connector ClearenceRequest
         RequiredRole<String> inAuthRequest = new RequiredRole<>("In Auth Request");
-        ProvidedRole<String> outAuthRequest = new ProvidedRole<>("Out Auth Request");
+        ProvidedRole<byte[]> outAuthRequest = new ProvidedRole<>("Out Auth Request");
         RequiredRole<String> inAuthAnswer = new RequiredRole<>("In Auth Answer");
         ProvidedRole<String> outAuthAnswer = new ProvidedRole<>("Out Auth Answer");
         Connector clearenceRequest = new ClearenceRequest(inAuthRequest, outAuthRequest, inAuthAnswer, outAuthAnswer);
@@ -90,13 +90,13 @@ public class ServerDetails extends Configuration {
         // clearenceRequest#outAuthAnswer -> connectionManager#receiveAuthAnswer
         attach(outAuthAnswer, receiveAuthAnswer);
 
-        // database#sendSecurityRequest -> securityRequest#inSecurityRequest
+        // securityManager#sendSecurityRequest -> securityRequest#inSecurityRequest
         attach(sendSecurityRequest, inSecurityRequest);
-        // securityRequest#outSecurityRequest -> securityManager#receiveSecurityRequest
+        // securityRequest#outSecurityRequest -> database#receiveSecurityRequest
         attach(outSecurityRequest, receiveSecurityRequest);
-        // securityManager#sendSecurityAnswer -> securityRequest#inSecurityAnswer
+        // database#sendSecurityAnswer -> securityRequest#inSecurityAnswer
         attach(sendSecurityAnswer, inSecurityAnswer);
-        // securityRequest#outSecurityAnswer -> database#receiveSecurityAnswer
+        // securityRequest#outSecurityAnswer -> securityManager#receiveSecurityAnswer
         attach(outSecurityAnswer, receiveSecurityAnswer);
 
         // add elements to the configuration

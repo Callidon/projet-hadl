@@ -10,12 +10,11 @@ import java.util.*;
  * Created by thomas on 24/10/16.
  */
 public class Database extends Component {
-    private Queue<String> queries = new LinkedList<>();
     private Map<String, String> datas = new HashMap<>();
 
     public Database(ProvidedPort<String> sendQueryAnswer, RequiredPort<String> receiveQuery,
-                    ProvidedPort<String> sendSecurityRequest, RequiredPort<String> receiveSecurityAnswer) {
-        super(Arrays.asList(sendQueryAnswer, receiveQuery, sendSecurityRequest, receiveSecurityAnswer));
+                    ProvidedPort<String> sendSecurityAnswer, RequiredPort<String> receiveSecurityRequest) {
+        super(Arrays.asList(sendQueryAnswer, receiveQuery, sendSecurityAnswer, receiveSecurityRequest));
 
         // Mock the content of a database
         datas.put("momo", "Des nains et des hommes");
@@ -23,23 +22,20 @@ public class Database extends Component {
 
         // Listen for incoming SQL queries
         receiveQuery.subscribe(data -> {
-            queries.add(data);
-            // ask for security infos
-            sendSecurityRequest.send("need data");
+            String response = datas.get(data);
+            if(response == null) {
+                sendQueryAnswer.send("No data corresponding to the query : " + data);
+            } else {
+                sendQueryAnswer.send(response);
+            }
         });
 
-        // Listen for incoming security request answers
-        receiveSecurityAnswer.subscribe(data -> {
-            if("ok".equals(data)) {
-                String query = queries.poll();
-                String response = datas.get(query);
-                if(response == null) {
-                    sendQueryAnswer.send("No data corresponding to the query : " + query);
-                } else {
-                    sendQueryAnswer.send(response);
-                }
+        // Listen for incoming security request
+        receiveSecurityRequest.subscribe(data -> {
+            if(!datas.isEmpty()) {
+                sendSecurityAnswer.send("ok");
             } else {
-                sendQueryAnswer.send("Invalid query, permissions denied");
+                sendSecurityAnswer.send("database unavailable");
             }
         });
     }
