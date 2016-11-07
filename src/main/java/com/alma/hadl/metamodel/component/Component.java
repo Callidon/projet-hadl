@@ -17,7 +17,7 @@ public abstract class Component extends Element {
      * Constructeur
      * @param interfaces Les interfaces que possède le composant
      */
-    public Component(List<Interface> interfaces) {
-        super(interfaces);
+    public Component(String name, List<Interface> interfaces) {
+        super(name, interfaces);
     }
 }

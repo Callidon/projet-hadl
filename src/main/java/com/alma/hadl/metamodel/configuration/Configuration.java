@@ -11,7 +11,9 @@ import com.alma.hadl.metamodel.interfaces.required.RequiredPortComponent;
 import com.alma.hadl.metamodel.interfaces.required.RequiredPortConfiguration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Configuration représente une configuration du modèle d'Architecture orientée composant.
@@ -24,15 +26,15 @@ public abstract class Configuration extends Element {
     /**
      * Les éléments (Composants ou Configurations) que la configuration encapsule
      */
-    private List<Element> elements;
+    private Map<String, Element> elements;
 
     /**
      * Constructeur
      * @param interfaces Les interfaces que la configueation possède
      */
-    public Configuration(List<Interface> interfaces) {
-        super(interfaces);
-        elements = new ArrayList<>();
+    public Configuration(String name, List<Interface> interfaces) {
+        super(name, interfaces);
+        elements = new HashMap<>();
     }
 
     /**
@@ -40,7 +42,32 @@ public abstract class Configuration extends Element {
      * @param element L'élément à ajouter à la configuration
      */
     protected void addElement(Element element) {
-        elements.add(element);
+        elements.put(element.getName(), element);
+    }
+
+    /**
+     * Méthode qui échange à chaud deux éléments
+     * @param newElement Le nouvel élément de remplacement
+     * @param targetName Le nom de l'élément que l'on veut remplacer
+     * @return L'ancien élément que l'on a substitué
+     */
+    public Element swap(Element newElement, String targetName) throws Exception {
+        Element previous = elements.get(targetName);
+        // transfer all subscriptions from the interfaces of the target to the interfaces of the new element
+        for(Map.Entry<String, Interface> pair : previous.getInterfaces().entrySet()) {
+            Interface originInterface = pair.getValue();
+            Interface targetInterface = newElement.getInterface(pair.getKey());
+            if(targetInterface == null) {
+                throw new Exception("missing interface"); // TODO use a specific exception here
+            }
+            // transfer all subscriptions to the target interface, then clean them all
+            originInterface.transferSubscriptions(targetInterface);
+            originInterface.unsubscribeAll();
+        }
+        // save the nex element, remove the previous and then return it
+        addElement(newElement);
+        elements.remove(targetName);
+        return previous;
     }
 
     /**
@@ -51,12 +78,7 @@ public abstract class Configuration extends Element {
      * @param <T> Le type de données qui transitent via ce lien d'attachment
      */
     protected <T> void attach(Provided<T> input, final Required<T> output) {
-        input.subscribe(new IObserver<T>() {
-            @Override
-            public void update(T data) {
-                output.receive(data);
-            }
-        });
+        input.subscribe(data -> output.receive(data));
     }
 
     /**
@@ -67,12 +89,7 @@ public abstract class Configuration extends Element {
      * @param <T> Le type de données qui transitent via ce lien de binding
      */
     protected <T> void bind(ProvidedPortConfiguration<T> left, final ProvidedPortComponent<T> right) {
-        left.subscribe(new IObserver<T>() {
-            @Override
-            public void update(T data) {
-                right.notifyObservers(data);
-            }
-        });
+        left.subscribe(data -> right.notifyObservers(data));
     }
 
     /**
@@ -83,12 +100,7 @@ public abstract class Configuration extends Element {
      * @param <T> Le type de données qui transitent via ce lien de binding
      */
     protected <T> void bind(ProvidedPortComponent<T> left, final ProvidedPortConfiguration<T> right) {
-        left.subscribe(new IObserver<T>() {
-            @Override
-            public void update(T data) {
-                right.notifyObservers(data);
-            }
-        });
+        left.subscribe(data -> right.notifyObservers(data));
     }
 
     /**
@@ -99,12 +111,7 @@ public abstract class Configuration extends Element {
      * @param <T> Le type de données qui transitent via ce lien de binding
      */
     protected <T> void bind(ProvidedPortConfiguration<T> left, final ProvidedPortConfiguration<T> right) {
-        left.subscribe(new IObserver<T>() {
-            @Override
-            public void update(T data) {
-                right.notifyObservers(data);
-            }
-        });
+        left.subscribe(data -> right.notifyObservers(data));
     }
 
     /**
@@ -115,12 +122,7 @@ public abstract class Configuration extends Element {
      * @param <T> Le type de données qui transitent via ce lien de binding
      */
     protected <T> void bind(RequiredPortConfiguration<T> left, final RequiredPortComponent<T> right) {
-        left.subscribe(new IObserver<T>() {
-            @Override
-            public void update(T data) {
-                right.receive(data);
-            }
-        });
+        left.subscribe(data -> right.receive(data));
     }
 
     /**
@@ -131,12 +133,7 @@ public abstract class Configuration extends Element {
      * @param <T> Le type de données qui transitent via ce lien de binding
      */
     protected <T> void bind(RequiredPortComponent<T> left, final RequiredPortConfiguration<T> right) {
-        left.subscribe(new IObserver<T>() {
-            @Override
-            public void update(T data) {
-                right.receive(data);
-            }
-        });
+        left.subscribe(data -> right.receive(data));
     }
 
     /**
@@ -147,11 +144,6 @@ public abstract class Configuration extends Element {
      * @param <T> Le type de données qui transitent via ce lien de binding
      */
     protected <T> void bind(RequiredPortConfiguration<T> left, final RequiredPortConfiguration<T> right) {
-        left.subscribe(new IObserver<T>() {
-            @Override
-            public void update(T data) {
-                right.receive(data);
-            }
-        });
+        left.subscribe(data -> right.receive(data));
     }
 }

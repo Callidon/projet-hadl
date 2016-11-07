@@ -21,7 +21,7 @@ public class ConnectionManager extends Component {
     public ConnectionManager(ProvidedPortComponent<Properties> inputSocket, RequiredPortComponent<Properties> outputSocket,
                              ProvidedPortComponent<String> sendQuery, RequiredPortComponent<String> receiveQueryAnswer,
                              ProvidedPortComponent<String> sendAuthRequest, RequiredPortComponent<String> receiveAuthAnswer) {
-        super(Arrays.asList(inputSocket, outputSocket, sendQuery, receiveQueryAnswer, sendAuthRequest, receiveAuthAnswer));
+        super("ConnectionManager", Arrays.asList(inputSocket, outputSocket, sendQuery, receiveQueryAnswer, sendAuthRequest, receiveAuthAnswer));
 
         // Listen for incoming messages
         inputSocket.subscribe(data -> {

@@ -14,7 +14,7 @@ import java.util.Properties;
  */
 public class RPC extends Connector {
     public RPC(RequiredRole<Properties> inRequest, ProvidedRole<Properties> outRequest, RequiredRole<Properties> inAnswer, ProvidedRole<Properties> outAnswer) {
-        super(Arrays.asList(inRequest, outRequest, inAnswer, outAnswer));
+        super("RPC", Arrays.asList(inRequest, outRequest, inAnswer, outAnswer));
         Glue<Properties, Properties> gRequest = new GlueRequest();
         Glue<Properties, Properties> gAnswer = new GlueAnswer();
         addGlue(gRequest, inRequest, outRequest);

@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class SecurityRequest extends Connector {
     public SecurityRequest(RequiredRole<String> inSecurityRequest, ProvidedRole<String> outSecurityRequest,
                            RequiredRole<String> inSecurityAnswer, ProvidedRole<String> outSecurityAnswer) {
-        super(Arrays.asList(inSecurityRequest, outSecurityRequest, inSecurityAnswer, outSecurityAnswer));
+        super("SecurityRequest", Arrays.asList(inSecurityRequest, outSecurityRequest, inSecurityAnswer, outSecurityAnswer));
         Glue<String, String> gSecurityRequest = new GlueSecurityAnswer();
         Glue<String, String> gSecurityAnswer = new GlueSecurityAnswer();
         addGlue(gSecurityRequest, inSecurityRequest, outSecurityRequest);

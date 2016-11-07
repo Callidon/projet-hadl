@@ -17,7 +17,7 @@ public class Database extends Component {
 
     public Database(ProvidedPortComponent<String> sendQueryAnswer, RequiredPortComponent<String> receiveQuery,
                     ProvidedPortComponent<String> sendSecurityAnswer, RequiredPortComponent<String> receiveSecurityRequest) {
-        super(Arrays.asList(sendQueryAnswer, receiveQuery, sendSecurityAnswer, receiveSecurityRequest));
+        super("Database", Arrays.asList(sendQueryAnswer, receiveQuery, sendSecurityAnswer, receiveSecurityRequest));
 
         // Mock the content of a database
         datas.put("momo", "Des nains et des hommes");

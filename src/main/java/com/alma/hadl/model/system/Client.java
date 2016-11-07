@@ -14,6 +14,6 @@ import java.util.Properties;
  */
 public class Client extends Component {
     public Client(ProvidedPortComponent<Properties> input, RequiredPortComponent<Properties> output) {
-        super(Arrays.asList(input, output));
+        super("Client", Arrays.asList(input, output));
     }
 }

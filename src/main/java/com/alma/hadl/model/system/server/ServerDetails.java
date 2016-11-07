@@ -9,7 +9,7 @@ import com.alma.hadl.metamodel.interfaces.provided.ProvidedRole;
 import com.alma.hadl.metamodel.interfaces.required.RequiredPortComponent;
 import com.alma.hadl.metamodel.interfaces.required.RequiredPortConfiguration;
 import com.alma.hadl.metamodel.interfaces.required.RequiredRole;
-import com.alma.hadl.model.system.server.clearence.ClearenceRequest;
+import com.alma.hadl.model.system.server.clearence.ClearanceRequest;
 import com.alma.hadl.model.system.server.security.SecurityRequest;
 import com.alma.hadl.model.system.server.sql.SQLRequest;
 
@@ -27,7 +27,7 @@ import java.util.Properties;
  */
 public class ServerDetails extends Configuration {
     public ServerDetails(ProvidedPortConfiguration<Properties> inputDetails, RequiredPortConfiguration<Properties> outputDetails) {
-        super(Arrays.asList(inputDetails, outputDetails));
+        super("ServerDetails", Arrays.asList(inputDetails, outputDetails));
 
         // Creates component ConnectionManager
         ProvidedPortComponent<Properties> inputSocket = new ProvidedPortComponent<>("Input Socket");
@@ -60,12 +60,12 @@ public class ServerDetails extends Configuration {
         ProvidedRole<String> outQueryAnswer = new ProvidedRole<>("Out Query Answer");
         Connector sqlRequest = new SQLRequest(inQuery, outQuery, inQueryAnswer, outQueryAnswer);
 
-        // Creates connector ClearenceRequest
+        // Creates connector ClearanceRequest
         RequiredRole<String> inAuthRequest = new RequiredRole<>("In Auth Request");
         ProvidedRole<byte[]> outAuthRequest = new ProvidedRole<>("Out Auth Request");
         RequiredRole<String> inAuthAnswer = new RequiredRole<>("In Auth Answer");
         ProvidedRole<String> outAuthAnswer = new ProvidedRole<>("Out Auth Answer");
-        Connector clearenceRequest = new ClearenceRequest(inAuthRequest, outAuthRequest, inAuthAnswer, outAuthAnswer);
+        Connector clearanceRequest = new ClearanceRequest(inAuthRequest, outAuthRequest, inAuthAnswer, outAuthAnswer);
 
         // Creates connector SecurityRequest
         RequiredRole<String> inSecurityRequest = new RequiredRole<>("In Security Request");
@@ -112,7 +112,7 @@ public class ServerDetails extends Configuration {
         addElement(database);
         addElement(securityManager);
         addElement(sqlRequest);
-        addElement(clearenceRequest);
+        addElement(clearanceRequest);
         addElement(securityRequest);
     }
 }

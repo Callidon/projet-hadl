@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class SQLRequest extends Connector {
     public SQLRequest(RequiredRole<String> inQuery, ProvidedRole<String> outQuery,
                       RequiredRole<String> inQueryAnswer, ProvidedRole<String> outQueryAnswer) {
-        super(Arrays.asList(inQuery, outQuery, inQueryAnswer, outQueryAnswer));
+        super("SQLRequest", Arrays.asList(inQuery, outQuery, inQueryAnswer, outQueryAnswer));
         Glue<String, String> gQuery = new GlueQuery();
         Glue<String, String> gQueryAnswer = new GlueQueryAnswer();
         addGlue(gQuery, inQuery, outQuery);

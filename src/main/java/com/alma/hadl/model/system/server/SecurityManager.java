@@ -23,7 +23,7 @@ public class SecurityManager extends Component {
 
     public SecurityManager(ProvidedPortComponent<String> sendAuthAnswer, RequiredPortComponent<byte[]> receiveAuthRequest,
                            ProvidedPortComponent<String> sendSecurityRequest, RequiredPortComponent<String> receiveSecurityAnswer) {
-        super(Arrays.asList(sendAuthAnswer, receiveAuthRequest, sendSecurityRequest, receiveSecurityAnswer));
+        super("SecurityManager", Arrays.asList(sendAuthAnswer, receiveAuthRequest, sendSecurityRequest, receiveSecurityAnswer));
 
         // generate a random salt for more security
         SecureRandom random = new SecureRandom();

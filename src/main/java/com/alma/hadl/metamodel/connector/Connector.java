@@ -25,8 +25,8 @@ public abstract class Connector extends Element {
      * Constructeur
      * @param interfaces Les interfaces que le connecteur possède
      */
-    public Connector(List<Interface> interfaces) {
-        super(interfaces);
+    public Connector(String name, List<Interface> interfaces) {
+        super(name, interfaces);
         glues = new ArrayList<>();
     }
 

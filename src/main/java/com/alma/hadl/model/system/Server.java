@@ -16,7 +16,7 @@ import java.util.Properties;
 public class Server extends Component {
     public Server(RequiredPortComponent<Properties> receiveRequest, ProvidedPortComponent<Properties> sendAnswer,
                   ProvidedPortComponent<Properties> sendDetails, RequiredPortComponent<Properties> receiveDetails) {
-        super(Arrays.asList(receiveRequest, sendAnswer, sendDetails, receiveDetails));
+        super("Server", Arrays.asList(receiveRequest, sendAnswer, sendDetails, receiveDetails));
 
         // Listen for incoming messages from Client
         receiveRequest.subscribe(sendDetails::send);

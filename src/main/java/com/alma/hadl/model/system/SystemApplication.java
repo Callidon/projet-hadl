@@ -23,7 +23,7 @@ import java.util.Properties;
 public class SystemApplication extends Configuration {
 
     public SystemApplication(ProvidedPortConfiguration<Properties> inputClient, RequiredPortConfiguration<Properties> outputClient) {
-        super(Arrays.asList(inputClient, outputClient));
+        super("SystemApplication", Arrays.asList(inputClient, outputClient));
         // creates the components of the configuration
 
         // Creates component Client

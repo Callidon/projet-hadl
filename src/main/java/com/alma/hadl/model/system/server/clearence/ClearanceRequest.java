@@ -11,10 +11,10 @@ import java.util.Arrays;
 /**
  * Created by thomas on 24/10/16.
  */
-public class ClearenceRequest extends Connector {
-    public ClearenceRequest(RequiredRole<String> inAuthRequest, ProvidedRole<byte[]> outAuthRequest,
+public class ClearanceRequest extends Connector {
+    public ClearanceRequest(RequiredRole<String> inAuthRequest, ProvidedRole<byte[]> outAuthRequest,
                             RequiredRole<String> inAuthAnswer, ProvidedRole<String> outAuthAnswer) {
-        super(Arrays.asList(inAuthRequest, outAuthRequest, inAuthAnswer, outAuthAnswer));
+        super("ClearanceRequest", Arrays.asList(inAuthRequest, outAuthRequest, inAuthAnswer, outAuthAnswer));
         Glue<String, byte[]> gAuthRequest = new GlueAuthRequest();
         Glue<String, String> gAuthAnswer = new GlueQueryAnswer();
         addGlue(gAuthRequest, inAuthRequest, outAuthRequest);

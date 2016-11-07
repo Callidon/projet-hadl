@@ -12,6 +12,12 @@ import java.util.Map;
  * @author Thomas Minier
  */
 public abstract class Element {
+
+    /**
+     * Le nom de l'élément
+     */
+    protected String name;
+
     /**
      * La liste des interfaces que possède cet élément
      */
@@ -21,7 +27,8 @@ public abstract class Element {
      * Constructeur
      * @param interfaces La liste des interfaces que possède cet élément
      */
-    public Element(List<Interface> interfaces) {
+    public Element(String name, List<Interface> interfaces) {
+        this.name = name;
         for(Interface interf : interfaces) {
             this.interfaces.put(interf.getName(), interf);
         }
@@ -34,5 +41,21 @@ public abstract class Element {
      */
     public Interface getInterface(String name) {
         return interfaces.get(name);
+    }
+
+    /**
+     * Accesseur protégé sur les interfaces de l'élément
+     * @return Les interfaces de l'élément
+     */
+    public Map<String, Interface> getInterfaces() {
+        return interfaces;
+    }
+
+    /**
+     * Accesseur sur le nom de l'élément
+     * @return Le nom de l'élément
+     */
+    public String getName() {
+        return name;
     }
 }
