@@ -46,31 +46,6 @@ public abstract class Configuration extends Element {
     }
 
     /**
-     * Méthode qui échange à chaud deux éléments
-     * @param newElement Le nouvel élément de remplacement
-     * @param targetName Le nom de l'élément que l'on veut remplacer
-     * @return L'ancien élément que l'on a substitué
-     */
-    public Element swap(Element newElement, String targetName) throws Exception {
-        Element previous = elements.get(targetName);
-        // transfer all subscriptions from the interfaces of the target to the interfaces of the new element
-        for(Map.Entry<String, Interface> pair : previous.getInterfaces().entrySet()) {
-            Interface originInterface = pair.getValue();
-            Interface targetInterface = newElement.getInterface(pair.getKey());
-            if(targetInterface == null) {
-                throw new Exception("missing interface"); // TODO use a specific exception here
-            }
-            // transfer all subscriptions to the target interface, then clean them all
-            originInterface.transferSubscriptions(targetInterface);
-            originInterface.unsubscribeAll();
-        }
-        // save the nex element, remove the previous and then return it
-        addElement(newElement);
-        elements.remove(targetName);
-        return previous;
-    }
-
-    /**
      * Méthode qui créée un lien d'attachment d'un port fourni vers un port requis.
      * Toute donnée reçue par le port fournie sera transférée au port requis grâce à un observateur.
      * @param input Le port fourni dont les données seont issues.
