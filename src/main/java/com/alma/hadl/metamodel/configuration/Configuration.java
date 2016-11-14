@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Configuration représente une configuration du modèle d'Architecture orientée composant.
  * C'est elle qui coordonne les composants et les connecteurs entre eux, et elle créée les liens
- * d'attchment et de bindings entre les interfaces.
+ * d'attachments et de bindings entre les interfaces.
  * @author Théo Couraud
  * @author Thomas Minier
  */
@@ -30,7 +30,7 @@ public abstract class Configuration extends Element {
 
     /**
      * Constructeur
-     * @param interfaces Les interfaces que la configueation possède
+     * @param interfaces Les interfaces que la configuration possède
      */
     public Configuration(String name, List<Interface> interfaces) {
         super(name, interfaces);

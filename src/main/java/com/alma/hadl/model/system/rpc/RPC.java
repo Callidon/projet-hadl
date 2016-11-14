@@ -9,8 +9,9 @@ import java.util.Arrays;
 import java.util.Properties;
 
 /**
+ * Composant RPC qui représente une connexion entre un serveur et un client.
+ * @author Théo Couraud
  * @author Thomas Minier
- * @date 17/10/16
  */
 public class RPC extends Connector {
     public RPC(RequiredRole<Properties> inRequest, ProvidedRole<Properties> outRequest, RequiredRole<Properties> inAnswer, ProvidedRole<Properties> outAnswer) {
