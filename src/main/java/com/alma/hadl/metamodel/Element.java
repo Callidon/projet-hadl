@@ -44,7 +44,7 @@ public abstract class Element {
     }
 
     /**
-     * Accesseur protégé sur les interfaces de l'élément
+     * Accesseur sur les interfaces de l'élément
      * @return Les interfaces de l'élément
      */
     public Map<String, Interface> getInterfaces() {

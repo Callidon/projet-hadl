@@ -47,21 +47,21 @@ public abstract class Configuration extends Element {
 
     /**
      * Méthode qui créée un lien d'attachment d'un port fourni vers un port requis.
-     * Toute donnée reçue par le port fournie sera transférée au port requis grâce à un observateur.
-     * @param input Le port fourni dont les données seont issues.
+     * Toute donnée reçue par le port fourni sera transférée au port requis grâce à un observateur.
+     * @param input Le port fourni dont les données seront issues.
      * @param output Le port requis vers lequel les données seront transmises.
-     * @param <T> Le type de données qui transitent via ce lien d'attachment
+     * @param <T> Le type de donnée qui transite via ce lien d'attachment
      */
     protected <T> void attach(Provided<T> input, final Required<T> output) {
         input.subscribe(data -> output.receive(data));
     }
 
     /**
-     * Méthode qui créée un lien de binding entre deux ports fournis de configuration vers composant
+     * Méthode qui créée un lien de binding entre deux ports fournis de configuration vers composant.
      * Toute donnée reçue par le 1er port sera transférée au second port grâce à un observateur.
      * @param left Le port dont les données sont issues.
      * @param right Le port vers lequel les données seront transmises.
-     * @param <T> Le type de données qui transitent via ce lien de binding
+     * @param <T> Le type de donnée qui transite via ce lien de binding
      */
     protected <T> void bind(ProvidedPortConfiguration<T> left, final ProvidedPortComponent<T> right) {
         left.subscribe(data -> right.notifyObservers(data));
@@ -72,7 +72,7 @@ public abstract class Configuration extends Element {
      * Toute donnée reçue par le 1er port sera transférée au second port grâce à un observateur.
      * @param left Le port dont les données sont issues.
      * @param right Le port vers lequel les données seront transmises.
-     * @param <T> Le type de données qui transitent via ce lien de binding
+     * @param <T> Le type de donnée qui transite via ce lien de binding
      */
     protected <T> void bind(ProvidedPortComponent<T> left, final ProvidedPortConfiguration<T> right) {
         left.subscribe(data -> right.notifyObservers(data));
@@ -83,7 +83,7 @@ public abstract class Configuration extends Element {
      * Toute donnée reçue par le 1er port sera transférée au second port grâce à un observateur.
      * @param left Le port dont les données sont issues.
      * @param right Le port vers lequel les données seront transmises.
-     * @param <T> Le type de données qui transitent via ce lien de binding
+     * @param <T> Le type de donnée qui transite via ce lien de binding
      */
     protected <T> void bind(ProvidedPortConfiguration<T> left, final ProvidedPortConfiguration<T> right) {
         left.subscribe(data -> right.notifyObservers(data));
@@ -94,7 +94,7 @@ public abstract class Configuration extends Element {
      * Toute donnée reçue par le 1er port sera transférée au second port grâce à un observateur.
      * @param left Le port dont les données sont issues.
      * @param right Le port vers lequel les données seront transmises.
-     * @param <T> Le type de données qui transitent via ce lien de binding
+     * @param <T> Le type de donnée qui transite via ce lien de binding
      */
     protected <T> void bind(RequiredPortConfiguration<T> left, final RequiredPortComponent<T> right) {
         left.subscribe(data -> right.receive(data));
@@ -105,7 +105,7 @@ public abstract class Configuration extends Element {
      * Toute donnée reçue par le 1er port sera transférée au second port grâce à un observateur.
      * @param left Le port dont les données sont issues.
      * @param right Le port vers lequel les données seront transmises.
-     * @param <T> Le type de données qui transitent via ce lien de binding
+     * @param <T> Le type de donnée qui transite via ce lien de binding
      */
     protected <T> void bind(RequiredPortComponent<T> left, final RequiredPortConfiguration<T> right) {
         left.subscribe(data -> right.receive(data));
@@ -116,7 +116,7 @@ public abstract class Configuration extends Element {
      * Toute donnée reçue par le 1er port sera transférée au second port grâce à un observateur.
      * @param left Le port dont les données sont issues.
      * @param right Le port vers lequel les données seront transmises.
-     * @param <T> Le type de données qui transitent via ce lien de binding
+     * @param <T> Le type de donnée qui transite via ce lien de binding
      */
     protected <T> void bind(RequiredPortConfiguration<T> left, final RequiredPortConfiguration<T> right) {
         left.subscribe(data -> right.receive(data));
