@@ -49,8 +49,8 @@ public class ServerDetails extends Configuration {
         // Creates component SecurityManager
         ProvidedPortComponent<String> sendAuthAnswer = new ProvidedPortComponent<>("Send Auth Answer");
         RequiredPortComponent<byte[]> receiveAuthRequest = new RequiredPortComponent<>("Receive Auth Request");
-        ProvidedPortComponent<String> sendSecurityRequest = new ProvidedPortComponent<>("Send Security Answer");
-        RequiredPortComponent<String> receiveSecurityAnswer = new RequiredPortComponent<>("Receive Security Request");
+        ProvidedPortComponent<String> sendSecurityRequest = new ProvidedPortComponent<>("Send Security Request");
+        RequiredPortComponent<String> receiveSecurityAnswer = new RequiredPortComponent<>("Receive Security Answer");
         Component securityManager = new SecurityManager(sendAuthAnswer, receiveAuthRequest, sendSecurityRequest, receiveSecurityAnswer);
 
         // Creates connector SQLRequest

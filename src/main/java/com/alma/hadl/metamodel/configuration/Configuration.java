@@ -62,7 +62,7 @@ public abstract class Configuration extends Element {
      * @param <T> Le type de donnée qui transite via ce lien de binding
      */
     protected <T> void bind(ProvidedPortConfiguration<T> left, final ProvidedPortComponent<T> right) {
-        left.subscribe(data -> right.notifyObservers(data));
+        left.subscribe(data -> right.send(data));
     }
 
     /**
@@ -73,7 +73,7 @@ public abstract class Configuration extends Element {
      * @param <T> Le type de donnée qui transite via ce lien de binding
      */
     protected <T> void bind(ProvidedPortComponent<T> left, final ProvidedPortConfiguration<T> right) {
-        left.subscribe(data -> right.notifyObservers(data));
+        left.subscribe(data -> right.send(data));
     }
 
     /**
@@ -84,7 +84,7 @@ public abstract class Configuration extends Element {
      * @param <T> Le type de donnée qui transite via ce lien de binding
      */
     protected <T> void bind(ProvidedPortConfiguration<T> left, final ProvidedPortConfiguration<T> right) {
-        left.subscribe(data -> right.notifyObservers(data));
+        left.subscribe(data -> right.send(data));
     }
 
     /**
