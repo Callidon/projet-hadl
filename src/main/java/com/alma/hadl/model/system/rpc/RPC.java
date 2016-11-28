@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Properties;
 
 /**
- * Composant RPC qui représente une connexion entre un serveur et un client.
+ * Connecteur RPC qui représente une connexion entre un serveur et un client.
  * @author Théo Couraud
  * @author Thomas Minier
  */

@@ -27,7 +27,7 @@ public abstract class Interface<T> implements IObservable<T> {
     /**
      * Le Logger dédié de la classe. Il sera utilisé pour afficher la trace des données dans l'application
      */
-    protected final Logger LOGGER = Logger.getLogger(this.getClass().getCanonicalName());
+    protected final Logger logger = Logger.getLogger(this.getClass().getCanonicalName());
 
     /**
      * Constructeur
@@ -57,7 +57,7 @@ public abstract class Interface<T> implements IObservable<T> {
 
     /**
      * Méthode permettant de désabonner un observateur à cette interface
-     * @param obs
+     * @param obs L'observateur que l'on veut détacher de l'interface
      */
     @Override
     public void unsubscribe(IObserver<T> obs) {
@@ -76,7 +76,7 @@ public abstract class Interface<T> implements IObservable<T> {
     }
 
     /**
-     * Méthode qui désabonnent de cette interface tous les observateurs abonnés
+     * Méthode qui désabonnent de l'interface tous les observateurs abonnés
      */
     @Override
     public void unsubscribeAll() {

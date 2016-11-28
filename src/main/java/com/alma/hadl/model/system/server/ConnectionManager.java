@@ -10,8 +10,8 @@ import java.util.Properties;
 import java.util.Queue;
 
 /**
- * Composant ConnnectionManager qui représengte un gestionnaire de connexion, chargé de gérer les requêtes
- * selon un protocole de précis. Il utilise d'autres composants de sa configuration à cette fin.
+ * Composant ConnnectionManager qui représente un gestionnaire de connexion, chargé de gérer les requêtes
+ * selon un protocole précis. Il utilise d'autres composants de sa configuration à cette fin.
  * @author Théo Couraud
  * @author Thomas Minier
  */
@@ -37,7 +37,7 @@ public class ConnectionManager extends Component {
                 Properties query = queries.poll();
                 sendQuery.send(query.getProperty("query"));
             } else {
-                // send a error response to the client
+                // send an error to the client
                 Properties response = new Properties();
                 response.setProperty("error-value", data);
                 outputSocket.receive(response);

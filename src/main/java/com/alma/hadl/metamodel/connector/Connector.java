@@ -40,12 +40,7 @@ public abstract class Connector extends Element {
      */
     protected <I,O> void addGlue(final Glue<I, O> glue, Required<I> input, final Provided<O> output) {
         glues.add(glue);
-        input.subscribe(new IObserver<I>() {
-            @Override
-            public void update(I data) {
-                output.send(glue.map(data));
-            }
-        });
+        input.subscribe(data -> output.send(glue.map(data)));
     }
 
 }

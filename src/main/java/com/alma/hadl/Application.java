@@ -1,8 +1,6 @@
 package com.alma.hadl;
 
-import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortComponent;
 import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortConfiguration;
-import com.alma.hadl.metamodel.interfaces.required.RequiredPortComponent;
 import com.alma.hadl.metamodel.interfaces.required.RequiredPortConfiguration;
 import com.alma.hadl.model.system.SystemApplication;
 

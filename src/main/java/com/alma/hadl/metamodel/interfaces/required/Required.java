@@ -24,7 +24,7 @@ public abstract class Required<T> extends Interface<T> {
      * @param data La donnée reçue par l'interface requise.
      */
     public void receive(T data) {
-        LOGGER.info("required interface '" + getName() + "' - received data : " + data.toString());
+        logger.info("[Required Interface] '" + getName() + "' - received data : " + data.toString());
         notifyObservers(data);
     }
 }

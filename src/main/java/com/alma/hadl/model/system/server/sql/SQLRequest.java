@@ -8,7 +8,9 @@ import com.alma.hadl.metamodel.interfaces.required.RequiredRole;
 import java.util.Arrays;
 
 /**
- * Created by thomas on 24/10/16.
+ * Connecteur SQL Request qui représente une connexion entre un gestionnaire de connexion et une base de données.
+ * @author Théo Couraud
+ * @author Thomas Minier
  */
 public class SQLRequest extends Connector {
     public SQLRequest(RequiredRole<String> inQuery, ProvidedRole<String> outQuery,

@@ -57,12 +57,16 @@ public class SystemApplication extends Configuration {
         bind(outputDetails, receiveDetails);
 
         // creates attachments
+
         // client#sendRequest -> rpc#inRequest
         attach(sendRequest, inRequest);
+
         // rpc#outRequest -> server#receiveRequest
         attach(outRequest, receiveRequest);
+
         // server#sendAnswer -> rpc#inAnswer
         attach(sendAnswer, inAnswer);
+
         // rpc#outAnswer -> client#receiveAnswer
         attach(outAnswer, receiveAnswer);
 

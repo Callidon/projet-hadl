@@ -9,14 +9,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 /**
- * Composant SecurityManager qui représnte une gestionnaire de sécurité.
+ * Composant SecurityManager qui représnte un gestionnaire de sécurité.
  * Il est chargé de valider les mots de passe et d'authorise une requête si l'état de la base de données le permet.
  * @author Théo Couraud
  * @author Thomas Minier
  */
 public class SecurityManager extends Component {
+    private static final Logger logger = Logger.getLogger(SecurityManager.class.getName());
+
     private final String refString = "my-great-password";
     private byte[] refPassword;
     private final String salt;
@@ -35,7 +38,7 @@ public class SecurityManager extends Component {
             md.update(salt.getBytes());
             refPassword = md.digest(refString.getBytes());
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            logger.warning(e.getMessage());
         }
 
         // Listen for incoming Authorization requests
@@ -46,12 +49,12 @@ public class SecurityManager extends Component {
                 md.update(salt.getBytes());
                 byte[] password = md.digest(data);
                 if(MessageDigest.isEqual(refPassword, password)) {
-                    sendSecurityRequest.send("is database available ?");
+                    sendSecurityRequest.send("database available ?");
                 } else {
-                    sendAuthAnswer.send("access denied, incorrect security query");
+                    sendAuthAnswer.send("access denied, incorrect password");
                 }
             } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
+                logger.warning(e.getMessage());
             }
         });
 

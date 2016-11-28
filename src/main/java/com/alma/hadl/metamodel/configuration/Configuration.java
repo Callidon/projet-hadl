@@ -1,7 +1,6 @@
 package com.alma.hadl.metamodel.configuration;
 
 import com.alma.hadl.metamodel.Element;
-import com.alma.hadl.metamodel.IObserver;
 import com.alma.hadl.metamodel.interfaces.Interface;
 import com.alma.hadl.metamodel.interfaces.provided.Provided;
 import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortComponent;
@@ -10,7 +9,6 @@ import com.alma.hadl.metamodel.interfaces.required.Required;
 import com.alma.hadl.metamodel.interfaces.required.RequiredPortComponent;
 import com.alma.hadl.metamodel.interfaces.required.RequiredPortConfiguration;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

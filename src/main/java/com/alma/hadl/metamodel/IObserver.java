@@ -5,6 +5,7 @@ package com.alma.hadl.metamodel;
  * @author Théo Couraud
  * @author Thomas Minier
  */
+@FunctionalInterface
 public interface IObserver<T> {
     void update(T data);
 }

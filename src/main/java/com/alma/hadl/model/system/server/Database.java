@@ -4,7 +4,9 @@ import com.alma.hadl.metamodel.component.Component;
 import com.alma.hadl.metamodel.interfaces.provided.ProvidedPortComponent;
 import com.alma.hadl.metamodel.interfaces.required.RequiredPortComponent;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Composant Database qui représente une base de données SQL.
@@ -20,7 +22,7 @@ public class Database extends Component {
         super("Database", Arrays.asList(sendQueryAnswer, receiveQuery, sendSecurityAnswer, receiveSecurityRequest));
 
         // Mock the content of a database
-        datas.put("momo", "Des nains et des hommes");
+        datas.put("tata", "Oh ! Je crois que j'ai vu un gros minet !");
         datas.put("toto", "Toto a deux amis : Pierre et Philippe");
 
         // Listen for incoming SQL queries
@@ -35,6 +37,8 @@ public class Database extends Component {
 
         // Listen for incoming security request
         receiveSecurityRequest.subscribe(data -> {
+            // check if the database has records.
+            // It can also be a more complex verification of the state of the database.
             if(!datas.isEmpty()) {
                 sendSecurityAnswer.send("ok");
             } else {

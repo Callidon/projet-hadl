@@ -18,10 +18,10 @@ import java.util.Properties;
 
 /**
  * Configuration ServerDetails qui représente une configuration qui gère les requêtes à une base de données.
- * Une requête entrante est prise en charge par un gestionnaire de connexion, qui coordonne son exéuction.
+ * Une requête entrante est prise en charge par un gestionnaire de connexion, qui coordonne son exécution.
  * Elle passe d'abord par une phase de validation avec un gestionnaire de sécurité, qui vérifie le mot de passe fourni
- * et si l'état de la base permet que la requête y soit transféré. Elle est esnuite transférée à la base de données elle-meêm pour y être exécutée.
- * Le résultat et les erreurs éventuels sont remontés via le port requis de la configuration.
+ * et si l'état de la base permet que la requête y soit exécutée. Elle est ensuite transférée à la base de données elle-même pour y être exécutée.
+ * Les résultats et les erreurs éventuels sont remontés via le port requis de la configuration.
  * @author Théo Couraud
  * @author Thomas Minier
  */
@@ -82,28 +82,37 @@ public class ServerDetails extends Configuration {
 
         // connectionManager#sendQuery -> sqlRequest#inQuery
         attach(sendQuery, inQuery);
+
         // sqlRequest#outQuery -> database#receiveQuery
         attach(outQuery, receiveQuery);
+
         // database#sendQueryAnswer -> sqlRequest#inQueryAnswer
         attach(sendQueryAnswer, inQueryAnswer);
+
         // sqlRequest#outQueryAnswer -> connectionManager#receiveQueryAnswer
         attach(outQueryAnswer, receiveQueryAnswer);
 
         // connectionManager#sendAuthRequest -> clearenceRequest#inAuthRequest
         attach(sendAuthRequest, inAuthRequest);
+
         // clearenceRequest#outAuthAnswer -> securityManager#receiveAuthRequest
         attach(outAuthRequest, receiveAuthRequest);
+
         // securityManager#sendAuthAnswer -> clearenceRequest#inAuthAnswer
         attach(sendAuthAnswer, inAuthAnswer);
+
         // clearenceRequest#outAuthAnswer -> connectionManager#receiveAuthAnswer
         attach(outAuthAnswer, receiveAuthAnswer);
 
         // securityManager#sendSecurityRequest -> securityRequest#inSecurityRequest
         attach(sendSecurityRequest, inSecurityRequest);
+
         // securityRequest#outSecurityRequest -> database#receiveSecurityRequest
         attach(outSecurityRequest, receiveSecurityRequest);
+
         // database#sendSecurityAnswer -> securityRequest#inSecurityAnswer
         attach(sendSecurityAnswer, inSecurityAnswer);
+
         // securityRequest#outSecurityAnswer -> securityManager#receiveSecurityAnswer
         attach(outSecurityAnswer, receiveSecurityAnswer);
 
